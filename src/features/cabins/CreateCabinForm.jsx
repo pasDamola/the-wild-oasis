@@ -65,7 +65,7 @@ function CreateCabinForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
   const onSubmit = (data) => {
-    mutate({ ...data, image: data.image.at(0) });
+    mutate({ ...data, image: data.image[0] });
   };
 
   return (
@@ -78,6 +78,7 @@ function CreateCabinForm() {
           {...register("name", {
             required: "This field is required",
           })}
+          disabled={isCreating}
         />
         {errors?.name?.message && <Error>{errors.name.message}</Error>}
       </FormRow>
@@ -94,6 +95,7 @@ function CreateCabinForm() {
               message: "Capacity should be at least 1",
             },
           })}
+          disabled={isCreating}
         />
         {errors?.maxCapacity?.message && (
           <Error>{errors.maxCapacity.message}</Error>
@@ -108,6 +110,7 @@ function CreateCabinForm() {
           {...register("regularPrice", {
             required: "This field is required",
           })}
+          disabled={isCreating}
         />
         {errors?.regularPrice?.message && (
           <Error>{errors.regularPrice.message}</Error>
@@ -126,6 +129,7 @@ function CreateCabinForm() {
               parseInt(value) <= getValues().regularPrice ||
               "Discount should be less than regular price",
           })}
+          disabled={isCreating}
         />
         {errors?.discount?.message && <Error>{errors.discount.message}</Error>}
       </FormRow>
@@ -139,6 +143,7 @@ function CreateCabinForm() {
           {...register("description", {
             required: "This field is required",
           })}
+          disabled={isCreating}
         />
         {errors?.description?.message && (
           <Error>{errors.description.message}</Error>
