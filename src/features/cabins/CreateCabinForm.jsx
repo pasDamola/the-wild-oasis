@@ -65,7 +65,7 @@ function CreateCabinForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
   const onSubmit = (data) => {
-    mutate(data);
+    mutate({ ...data, image: data.image.at(0) });
   };
 
   return (
@@ -79,7 +79,7 @@ function CreateCabinForm() {
             required: "This field is required",
           })}
         />
-        {errors?.name?.message && <Error>{errors.name.messgae}</Error>}
+        {errors?.name?.message && <Error>{errors.name.message}</Error>}
       </FormRow>
 
       <FormRow>
@@ -96,7 +96,7 @@ function CreateCabinForm() {
           })}
         />
         {errors?.maxCapacity?.message && (
-          <Error>{errors.maxCapacity.messgae}</Error>
+          <Error>{errors.maxCapacity.message}</Error>
         )}
       </FormRow>
 
@@ -110,7 +110,7 @@ function CreateCabinForm() {
           })}
         />
         {errors?.regularPrice?.message && (
-          <Error>{errors.regularPrice.messgae}</Error>
+          <Error>{errors.regularPrice.message}</Error>
         )}
       </FormRow>
 
@@ -123,11 +123,11 @@ function CreateCabinForm() {
           {...register("discount", {
             required: "This field is required",
             validate: (value) =>
-              value <= getValues().regularPrice ||
+              parseInt(value) <= getValues().regularPrice ||
               "Discount should be less than regular price",
           })}
         />
-        {errors?.discount?.message && <Error>{errors.discount.messgae}</Error>}
+        {errors?.discount?.message && <Error>{errors.discount.message}</Error>}
       </FormRow>
 
       <FormRow>
@@ -137,19 +137,24 @@ function CreateCabinForm() {
           id="description"
           defaultValue=""
           {...register("description", {
-            required: {
-              message: "This field is required",
-            },
+            required: "This field is required",
           })}
         />
         {errors?.description?.message && (
-          <Error>{errors.description.messgae}</Error>
+          <Error>{errors.description.message}</Error>
         )}
       </FormRow>
 
       <FormRow>
         <Label htmlFor="image">Cabin photo</Label>
-        <FileInput id="image" accept="image/*" />
+        <FileInput
+          id="image"
+          accept="image/*"
+          type="file"
+          {...register("image", {
+            required: "This field is required",
+          })}
+        />
       </FormRow>
 
       <FormRow>
