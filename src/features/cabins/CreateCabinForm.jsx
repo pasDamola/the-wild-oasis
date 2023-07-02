@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createEditCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
+import { useCreateCabin } from "./useCreateCabin";
 
 const FormRow = styled.div`
   display: grid;
@@ -51,18 +52,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   const isEditSession = Boolean(editId);
   const queryClient = useQueryClient();
 
-  const { mutate: createCabin, isLoading: isCreating } = useMutation({
-    mutationFn: createEditCabin,
-    onSuccess: () => {
-      toast.success("New cabin successfully created");
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-      reset();
-    },
-
-    onError: (err) => toast.error(err.message),
-  });
+  const { isCreating, createCabin } = useCreateCabin();
 
   const { mutate: editCabin, isLoading: isEditing } = useMutation({
     mutationFn: ({ newCabinData, id }) => createEditCabin(newCabinData, id),
@@ -92,7 +82,12 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         id: editId,
       });
     } else {
-      createCabin({ ...data, image: image });
+      createCabin(
+        { ...data, image: image },
+        {
+          onSuccess: () => reset(),
+        }
+      );
     }
   };
 
