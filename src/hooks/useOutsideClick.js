@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 
-function useModalOutsideClick(close) {
+export function useOutsideClick(close) {
   const ref = useRef();
 
   useEffect(() => {
@@ -17,5 +17,3 @@ function useModalOutsideClick(close) {
 
   return ref;
 }
-
-export default useModalOutsideClick;
