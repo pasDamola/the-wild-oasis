@@ -72,17 +72,14 @@ function Table({ columns, children }) {
 
 function Header({ children }) {
   const { columns } = useContext(TableContext);
-
   return (
-    <StyledHeader role="row" columns={columns}>
+    <StyledHeader role="row" columns={columns} as="header">
       {children}
     </StyledHeader>
   );
 }
-
 function Row({ children }) {
   const { columns } = useContext(TableContext);
-
   return (
     <StyledRow role="row" columns={columns}>
       {children}
@@ -91,7 +88,7 @@ function Row({ children }) {
 }
 
 function Body({ data, render }) {
-  if (!data.length) return <Empty>No data at the moment</Empty>;
+  if (!data.length) return <Empty>No data to show at the moment</Empty>;
 
   return <StyledBody>{data.map(render)}</StyledBody>;
 }
