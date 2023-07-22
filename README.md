@@ -14,3 +14,8 @@ An internal hotel management system, helps employees manage everything about the
 - React, React query, React Router, React Hook Form
 - Styled Components
 - Supabase (to build and manage the API)
+
+## Test details
+
+- Email: test@user.com
+- Password: PASS0987
